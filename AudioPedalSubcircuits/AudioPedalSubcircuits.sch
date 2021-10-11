@@ -1,0 +1,412 @@
+EESchema Schematic File Version 4
+LIBS:AudioPedalSubcircuits-cache
+EELAYER 30 0
+EELAYER END
+$Descr USLetter 11000 8500
+encoding utf-8
+Sheet 1 1
+Title "LM358 Breakout"
+Date "2020-04-15"
+Rev "1.1"
+Comp "Jacob Miller"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Amplifier_Operational:LM358 U1
+U 1 1 5E77C60E
+P 5200 4050
+F 0 "U1" H 5200 4417 50  0000 C CNN
+F 1 "LM358" H 5200 4326 50  0000 C CNN
+F 2 "Housings_DIP:DIP-8_W7.62mm_Socket" H 5200 4050 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/lm2904-n.pdf" H 5200 4050 50  0001 C CNN
+	1    5200 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Amplifier_Operational:LM358 U1
+U 2 1 5E77F031
+P 8000 4150
+F 0 "U1" H 8000 4517 50  0000 C CNN
+F 1 "LM358" H 8000 4426 50  0000 C CNN
+F 2 "Housings_DIP:DIP-8_W7.62mm_Socket" H 8000 4150 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/lm2904-n.pdf" H 8000 4150 50  0001 C CNN
+	2    8000 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Amplifier_Operational:LM358 U1
+U 3 1 5E78374A
+P 5200 4050
+F 0 "U1" H 5158 4096 50  0000 L CNN
+F 1 "LM358" H 5158 4005 50  0000 L CNN
+F 2 "Housings_DIP:DIP-8_W7.62mm_Socket" H 5200 4050 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/lm2904-n.pdf" H 5200 4050 50  0001 C CNN
+	3    5200 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP1_Small C1
+U 1 1 5E7926ED
+P 4250 3950
+F 0 "C1" V 4022 3950 50  0000 C CNN
+F 1 "1uF" V 4113 3950 50  0000 C CNN
+F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 4250 3950 50  0001 C CNN
+F 3 "~" H 4250 3950 50  0001 C CNN
+	1    4250 3950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4350 3950 4750 3950
+$Comp
+L Device:R_POT_US RV1
+U 1 1 5E796207
+P 4500 3300
+F 0 "RV1" H 4432 3346 50  0000 R CNN
+F 1 "10k" H 4432 3255 50  0000 R CNN
+F 2 "Potentiometers:Potentiometer_Triwood_RM-065" H 4500 3300 50  0001 C CNN
+F 3 "~" H 4500 3300 50  0001 C CNN
+F 4 "Bias" H 4500 3300 50  0001 C CNN "Note"
+	1    4500 3300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4750 3300 4650 3300
+Wire Wire Line
+	4750 3300 4750 3950
+Connection ~ 4750 3950
+Wire Wire Line
+	4750 3950 4900 3950
+$Comp
+L power:GNDA #PWR03
+U 1 1 5E797AFC
+P 4500 3550
+F 0 "#PWR03" H 4500 3300 50  0001 C CNN
+F 1 "GNDA" H 4505 3377 50  0000 C CNN
+F 2 "" H 4500 3550 50  0001 C CNN
+F 3 "" H 4500 3550 50  0001 C CNN
+	1    4500 3550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4500 3550 4500 3450
+$Comp
+L power:GNDA #PWR05
+U 1 1 5E798B2C
+P 5100 4750
+F 0 "#PWR05" H 5100 4500 50  0001 C CNN
+F 1 "GNDA" H 5105 4577 50  0000 C CNN
+F 2 "" H 5100 4750 50  0001 C CNN
+F 3 "" H 5100 4750 50  0001 C CNN
+	1    5100 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 4750 5100 4650
+$Comp
+L power:+5V #PWR04
+U 1 1 5E79D1A4
+P 5100 3450
+F 0 "#PWR04" H 5100 3300 50  0001 C CNN
+F 1 "+5V" H 5115 3623 50  0000 C CNN
+F 2 "" H 5100 3450 50  0001 C CNN
+F 3 "" H 5100 3450 50  0001 C CNN
+	1    5100 3450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 3450 5100 3750
+$Comp
+L power:+5V #PWR02
+U 1 1 5E79EEF5
+P 4500 2950
+F 0 "#PWR02" H 4515 3123 50  0001 C CNN
+F 1 "+5V" H 4515 3123 50  0000 C CNN
+F 2 "" H 4500 2950 50  0001 C CNN
+F 3 "" H 4500 2950 50  0001 C CNN
+	1    4500 2950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 3950 4150 3950
+$Comp
+L Device:R_POT_US RV2
+U 1 1 5E7A282B
+P 4500 4450
+F 0 "RV2" H 4432 4496 50  0000 R CNN
+F 1 "10k" H 4432 4405 50  0000 R CNN
+F 2 "Potentiometers:Potentiometer_Triwood_RM-065" H 4500 4450 50  0001 C CNN
+F 3 "~" H 4500 4450 50  0001 C CNN
+F 4 "Gain" H 4500 4450 50  0001 C CNN "Note"
+	1    4500 4450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4650 4450 5550 4450
+Wire Wire Line
+	5550 4450 5550 4050
+Wire Wire Line
+	5550 4050 5500 4050
+Wire Wire Line
+	4900 4150 4500 4150
+Wire Wire Line
+	4500 4150 4500 4300
+Wire Wire Line
+	4500 4600 4500 4650
+Wire Wire Line
+	4500 4650 5100 4650
+Connection ~ 5100 4650
+Wire Wire Line
+	5100 4650 5100 4350
+$Comp
+L Device:R_POT_US RV4
+U 1 1 5E77DF84
+P 7300 4600
+F 0 "RV4" H 7232 4646 50  0000 R CNN
+F 1 "10k" H 7232 4555 50  0000 R CNN
+F 2 "Potentiometers:Potentiometer_Triwood_RM-065" H 7300 4600 50  0001 C CNN
+F 3 "~" H 7300 4600 50  0001 C CNN
+F 4 "Gain" H 7300 4600 50  0001 C CNN "Note"
+	1    7300 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7300 4450 7300 4250
+Wire Wire Line
+	7300 4250 7700 4250
+Wire Wire Line
+	7450 4600 8450 4600
+Wire Wire Line
+	8450 4600 8450 4150
+Wire Wire Line
+	8450 4150 8300 4150
+$Comp
+L Device:CP1_Small C2
+U 1 1 5E77FF89
+P 7000 4050
+F 0 "C2" V 6772 4050 50  0000 C CNN
+F 1 "1uF" V 6863 4050 50  0000 C CNN
+F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 7000 4050 50  0001 C CNN
+F 3 "~" H 7000 4050 50  0001 C CNN
+	1    7000 4050
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R_POT_US RV3
+U 1 1 5E780F50
+P 7300 3400
+F 0 "RV3" H 7232 3446 50  0000 R CNN
+F 1 "10k" H 7232 3355 50  0000 R CNN
+F 2 "Potentiometers:Potentiometer_Triwood_RM-065" H 7300 3400 50  0001 C CNN
+F 3 "~" H 7300 3400 50  0001 C CNN
+F 4 "Bias" H 7300 3400 50  0001 C CNN "Note"
+	1    7300 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDA #PWR09
+U 1 1 5E783331
+P 7300 3700
+F 0 "#PWR09" H 7300 3450 50  0001 C CNN
+F 1 "GNDA" H 7305 3527 50  0000 C CNN
+F 2 "" H 7300 3700 50  0001 C CNN
+F 3 "" H 7300 3700 50  0001 C CNN
+	1    7300 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDA #PWR010
+U 1 1 5E783898
+P 7300 4900
+F 0 "#PWR010" H 7300 4650 50  0001 C CNN
+F 1 "GNDA" H 7305 4727 50  0000 C CNN
+F 2 "" H 7300 4900 50  0001 C CNN
+F 3 "" H 7300 4900 50  0001 C CNN
+	1    7300 4900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7300 4900 7300 4750
+Wire Wire Line
+	7300 3550 7300 3700
+$Comp
+L power:+5V #PWR08
+U 1 1 5E784E86
+P 7300 3050
+F 0 "#PWR08" H 7315 3223 50  0001 C CNN
+F 1 "+5V" H 7315 3223 50  0000 C CNN
+F 2 "" H 7300 3050 50  0001 C CNN
+F 3 "" H 7300 3050 50  0001 C CNN
+	1    7300 3050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7300 3050 7300 3250
+Wire Wire Line
+	7100 4050 7550 4050
+Wire Wire Line
+	7450 3400 7550 3400
+Wire Wire Line
+	7550 3400 7550 4050
+Connection ~ 7550 4050
+Wire Wire Line
+	7550 4050 7700 4050
+Wire Wire Line
+	6750 4050 6900 4050
+Connection ~ 8450 4150
+Wire Wire Line
+	8450 4150 8600 4150
+$Comp
+L Device:CP1_Small C3
+U 1 1 5E7C5267
+P 8700 4150
+F 0 "C3" V 8472 4150 50  0000 C CNN
+F 1 "1uF" V 8563 4150 50  0000 C CNN
+F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 8700 4150 50  0001 C CNN
+F 3 "~" H 8700 4150 50  0001 C CNN
+	1    8700 4150
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	8800 4150 9000 4150
+$Comp
+L Connector:Conn_01x01_Female J5
+U 1 1 5E7B3227
+P 6300 4850
+F 0 "J5" H 6328 4876 50  0000 L CNN
+F 1 "5V" H 6328 4785 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 6300 4850 50  0001 C CNN
+F 3 "~" H 6300 4850 50  0001 C CNN
+	1    6300 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Female J6
+U 1 1 5E7B4488
+P 6300 5450
+F 0 "J6" H 6328 5476 50  0000 L CNN
+F 1 "GND" H 6328 5385 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 6300 5450 50  0001 C CNN
+F 3 "~" H 6300 5450 50  0001 C CNN
+	1    6300 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Female J1
+U 1 1 5E7BBE0C
+P 3600 3950
+F 0 "J1" H 3492 3725 50  0000 C CNN
+F 1 "IN" H 3492 3816 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 3600 3950 50  0001 C CNN
+F 3 "~" H 3600 3950 50  0001 C CNN
+	1    3600 3950
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:Conn_01x01_Female J4
+U 1 1 5E7BC9CD
+P 9200 4150
+F 0 "J4" H 9228 4176 50  0000 L CNN
+F 1 "OUT" H 9228 4085 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 9200 4150 50  0001 C CNN
+F 3 "~" H 9200 4150 50  0001 C CNN
+	1    9200 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Female J2
+U 1 1 5E7BDD16
+P 6200 4050
+F 0 "J2" H 6228 4076 50  0000 L CNN
+F 1 "OUT" H 6228 3985 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 6200 4050 50  0001 C CNN
+F 3 "~" H 6200 4050 50  0001 C CNN
+	1    6200 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Female J3
+U 1 1 5E7BE502
+P 6550 4050
+F 0 "J3" H 6442 3825 50  0000 C CNN
+F 1 "IN" H 6442 3916 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 6550 4050 50  0001 C CNN
+F 3 "~" H 6550 4050 50  0001 C CNN
+	1    6550 4050
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:CP1_Small C4
+U 1 1 5E80A29B
+P 5750 4050
+F 0 "C4" V 5522 4050 50  0000 C CNN
+F 1 "1uF" V 5613 4050 50  0000 C CNN
+F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 5750 4050 50  0001 C CNN
+F 3 "~" H 5750 4050 50  0001 C CNN
+	1    5750 4050
+	0    -1   -1   0   
+$EndComp
+Connection ~ 5550 4050
+$Comp
+L Connector:Conn_01x01_Female J8
+U 1 1 5E82FF06
+P 6300 5650
+F 0 "J8" H 6328 5676 50  0000 L CNN
+F 1 "GND" H 6328 5585 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 6300 5650 50  0001 C CNN
+F 3 "~" H 6300 5650 50  0001 C CNN
+	1    6300 5650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Female J7
+U 1 1 5E830EF7
+P 6300 5100
+F 0 "J7" H 6328 5126 50  0000 L CNN
+F 1 "5V" H 6328 5035 50  0000 L CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 6300 5100 50  0001 C CNN
+F 3 "~" H 6300 5100 50  0001 C CNN
+	1    6300 5100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0101
+U 1 1 5E97D1AD
+P 6100 4750
+F 0 "#PWR0101" H 6115 4923 50  0001 C CNN
+F 1 "+5V" H 6115 4923 50  0000 C CNN
+F 2 "" H 6100 4750 50  0001 C CNN
+F 3 "" H 6100 4750 50  0001 C CNN
+	1    6100 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6100 4750 6100 4850
+Connection ~ 6100 4850
+Wire Wire Line
+	4500 2950 4500 3150
+Wire Wire Line
+	6100 4850 6100 5100
+$Comp
+L power:GNDA #PWR0102
+U 1 1 5E97FDB2
+P 6100 5800
+F 0 "#PWR0102" H 6100 5550 50  0001 C CNN
+F 1 "GNDA" H 6105 5627 50  0000 C CNN
+F 2 "" H 6100 5800 50  0001 C CNN
+F 3 "" H 6100 5800 50  0001 C CNN
+	1    6100 5800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6100 5800 6100 5650
+Connection ~ 6100 5650
+Wire Wire Line
+	6100 5650 6100 5450
+Wire Wire Line
+	5650 4050 5550 4050
+Wire Wire Line
+	5850 4050 6000 4050
+$EndSCHEMATC

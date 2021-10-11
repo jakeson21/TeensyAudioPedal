@@ -1,0 +1,190 @@
+/* Stereo peak meter example, assumes Audio adapter but just uses terminal so no more parts required.
+
+This example code is in the public domain
+*/
+
+#include <Audio.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
+
+// GUItool: begin automatically generated code
+AudioInputI2S            audioInput1; //xy=122.0103988647461,135.00002193450928
+AudioEffectChorus        chorus1;        //xy=370.0103988647461,292.0000219345093
+AudioEffectFreeverb      freeverb1;      //xy=373.0103988647461,177.00002193450928
+AudioEffectBitcrusher    bitcrusher1;    //xy=377.0103988647461,233.00002193450928
+// AudioAnalyzePeak         peak1;          //xy=384.0104064941406,108.01041412353516
+AudioMixer4              mixerOut;       //xy=594.0103988647461,152.00002193450928
+AudioOutputI2S           audioOutput1; //xy=765.0104064941406,157.00002193450928
+// AudioConnection          patchCord1(audioInput1, 0, peak1, 0);
+AudioConnection          patchCord2(audioInput1, 1, freeverb1, 0);
+AudioConnection          patchCord3(audioInput1, 1, bitcrusher1, 0);
+AudioConnection          patchCord4(audioInput1, 1, chorus1, 0);
+AudioConnection          patchCord5(audioInput1, 1, mixerOut, 0);
+AudioConnection          patchCord6(chorus1, 0, mixerOut, 3);
+AudioConnection          patchCord7(freeverb1, 0, mixerOut, 1);
+AudioConnection          patchCord8(bitcrusher1, 0, mixerOut, 2);
+AudioConnection          patchCord9(mixerOut, 0, audioOutput1, 1);
+AudioConnection          patchCord10(mixerOut, 0, audioOutput1, 0);
+AudioControlSGTL5000     audioShield;     //xy=127.01041030883789,62.01042556762695
+// GUItool: end automatically generated code
+
+
+// Available analog pins
+// pins 14,16,17,22
+//      A0,A2,A3,A8
+//int Pot1 = A0;
+//int Pot2 = A2;
+//int Pot3 = A3;
+//int Pot4 = A8;
+
+#include <Bounce.h>
+
+// Available Encoder pins: 0,1,2,3,4,5,9,14,16,17,22
+// Select FX: 0,1
+// P1: 2,3
+// P2: 4,5
+// LED: 9
+// MIX: 14,16
+// P3: 17,22 (not used)
+#include <Encoder.h>
+Encoder knob_select(0, 1);
+Encoder knob_mix(14, 16); // Dry=-1.0 ... 0.0=50% ... Wet=+1.0
+// Encoder knob_p1(2, 3);
+// Encoder knob_p2(4, 5);
+// Encoder knob_p3(17, 22);
+
+#include "OutputMixer.h"
+#include "FxController.h"
+#define NUMPARMS 2
+
+OutputMixer outputMixer(mixerOut);
+int fxpins[] = {2,3,4,5};
+FxController fxc(4, NUMPARMS, fxpins);
+
+// Number of samples in each delay line
+#define CHORUS_DELAY_LENGTH (3*AUDIO_BLOCK_SAMPLES)
+// Allocate the delay lines for left and right channels
+short delayline[CHORUS_DELAY_LENGTH];
+
+const int myInput = AUDIO_INPUT_LINEIN;
+// const int myInput = AUDIO_INPUT_MIC;
+
+const int ledPin = 13;
+int32_t last_select_val, last_mix_val = 0;
+
+void setup() {
+  AudioMemory(6);
+  audioShield.enable();
+  audioShield.inputSelect(myInput);
+  audioShield.volume(0.8);
+  audioShield.lineInLevel(0); // 3.12 Vp-p
+  audioShield.lineOutLevel(13); // 3.16 Vp-p
+  Serial.begin(9600);
+
+  // Default FX settings
+  freeverb1.roomsize(0.0);
+  freeverb1.damping(1.0);
+  
+  bitcrusher1.sampleRate(44100);
+  bitcrusher1.bits(8);
+
+  // 2 = number of "voices" in the chorus which INCLUDES the original voice
+  chorus1.begin(delayline, CHORUS_DELAY_LENGTH, 2);
+
+  // initialize the digital pin as an output.
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, true);   // set the LED on
+
+  // Keep current channel wet/dry mix value
+  outputMixer.setChannel(0);
+  int32_t mix_val = 400*outputMixer.getWetDryRatio();
+  knob_mix.write(mix_val);
+  last_mix_val = mix_val;
+  outputMixer.printAllRatios();
+}
+
+
+elapsedMillis fps;
+uint8_t cnt=0;
+void loop() { 
+  if(fps > 30) {
+    fps=0;
+
+    // set fx selection (counts by 4)
+    float raw_select_val = knob_select.read();
+    int32_t select_val = int32_t(raw_select_val/4.0) % 4; // only 4 fx channels supported
+    if (select_val<0) { select_val += 4; }
+    if (last_select_val != select_val)
+    {
+      last_select_val = select_val;
+      // knob_select.write(select_val);
+      outputMixer.setChannel(select_val);
+      fxc.setActiveChannel(select_val);
+      Serial.print("fx select: ");
+      Serial.print(select_val);
+      Serial.print(", raw: ");
+      Serial.println(raw_select_val);
+      fxc.printAllSettings();
+      digitalWrite(ledPin, select_val==0);   // set the LED on when no fx selected
+
+      // Keep current channel wet/dry mix value
+      int32_t mix_val = 400*outputMixer.getWetDryRatio();
+      knob_mix.write(mix_val);
+      last_mix_val = mix_val;
+    }
+
+    if (fxc.updateParameters())
+    {
+      fxc.printAllSettings();
+      if (select_val == 0) // bypass
+      {
+
+      }
+      else if (select_val == 1)
+      {
+        float p1 = fxc.getParameter(0)/100.0;
+        float p2 = fxc.getParameter(1)/100.0;
+        freeverb1.roomsize(p1);
+        freeverb1.damping(p2);
+        Serial.print("p1: ");
+        Serial.print(p1);
+        Serial.print(" p2: ");
+        Serial.println(p2);
+      }
+      else if (select_val == 2)
+      {
+        int p1 = fxc.getParameter(0)/4;
+        bitcrusher1.bits(p1);
+        Serial.print("p1: ");
+        Serial.println(p1);
+      }
+      else if (select_val == 3)
+      {
+        int p1 = fxc.getParameter(0)/4;
+        chorus1.voices(p1);
+        Serial.print("p1: ");
+        Serial.println(p1);
+      }
+    }
+
+    // set wet/dry mix
+    int32_t mix_val = knob_mix.read();
+    mix_val = constrain(mix_val, -400, 400); // will actually set -1.0 to 1.0
+    if (last_mix_val/4 != mix_val/4)
+    {
+      last_mix_val = mix_val;
+      knob_mix.write(mix_val);
+      outputMixer.setWetDryRatio(float(mix_val)/400.0);
+      
+      Serial.print("Mix set: ");
+      Serial.println(float(mix_val)/400.0);
+      outputMixer.printAllRatios();
+    }
+    else
+    {
+      knob_mix.write(mix_val);
+    }    
+  }
+}
