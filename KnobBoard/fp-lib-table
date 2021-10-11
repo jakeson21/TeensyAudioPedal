@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name KnobBoard)(type KiCad)(uri D:/git-repos/TeensyAudioPedal/KnobBoard.pretty)(options "")(descr ""))
+)
