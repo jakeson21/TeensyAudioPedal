@@ -32,6 +32,7 @@ AudioConnection          patchCord11(amp_out, 0, audioOutput1, 1);
 AudioControlSGTL5000     audioShield;    //xy=144.01040649414062,51
 // GUItool: end automatically generated code
 
+// Teensy 4.x Pins Rev D
 // Available analog pins
 // pins 14,16,17,22
 //      A0,A2,A3,A8
